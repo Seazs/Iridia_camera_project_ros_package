@@ -1,0 +1,2 @@
+my_robot_controller:up_pointing_camera
+-DCATKIN_DEVEL_PREFIX=/home/alex/catkin_ws/devel -DCMAKE_INSTALL_PREFIX=/home/alex/catkin_ws/install -G Unix Makefiles
