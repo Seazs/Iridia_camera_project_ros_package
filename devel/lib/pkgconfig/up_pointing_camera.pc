@@ -1,0 +1,8 @@
+prefix=/home/alex/catkin_ws/devel
+
+Name: up_pointing_camera
+Description: Description of up_pointing_camera
+Version: 0.0.1
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

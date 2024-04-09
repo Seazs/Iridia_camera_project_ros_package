@@ -1,0 +1,7 @@
+<launch>
+    <!-- Launch camera_publisher node -->
+    <node name="camera_publisher" pkg="up_pointing_camera" type="Camera_publisher.py" output="screen" />
+
+    <!-- Launch camera_listener node -->
+    <node name="camera_listener" pkg="up_pointing_camera" type="Camera_listener.py" output="screen" />
+</launch>
