@@ -2,6 +2,7 @@
 import rospy
 from sensor_msgs.msg import Image
 from std_msgs.msg import Empty
+from std_msgs.msg import Int16MultiArray
 from cv_bridge import CvBridge
 import cv2
 from ultralytics import YOLO
@@ -14,7 +15,7 @@ from time import sleep
 class CameraListener:
     def __init__(self):
         self.image_sub = rospy.Subscriber("image_raw", Image, self.callback, queue_size=1)
-        self.door_detection_pub = rospy.Publisher("door_detection", tuple, queue_size=1)
+        self.door_detection_pub = rospy.Publisher("door_detection", Int16MultiArray)
         self.bridge = CvBridge()
         self.image = None
         self.yolo = YOLO("/home/alexandre/catkin_ws/src/up_pointing_camera/src/best.pt")
@@ -32,12 +33,16 @@ class CameraListener:
             detected_class = self.classes[int (obj)]
             print(detected_class)
             rospy.loginfo(detected_class)
-            data = (detected_class, 3)
-            self.door_detection_pub.publish(data)
+            if detected_class == "door":
+                #publish the detection
+                data_analysed = Int16MultiArray(data=[1, 0, 0, 0])
+                self.door_detection_pub.publish(data_analysed)
+            
         
         self.confirmation_pub.publish(Empty()) 
 
 if __name__ == '__main__':
+    rospy.loginfo("starting camera listener node")
     rospy.init_node('camera_listener')
     rospy.loginfo("Camera Listener Node has been started")
     camera_listener = CameraListener()
