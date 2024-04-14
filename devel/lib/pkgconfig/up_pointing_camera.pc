@@ -1,4 +1,4 @@
-prefix=/home/alex/catkin_ws/devel
+prefix=/home/alexandre/old_catkin_ws/devel
 
 Name: up_pointing_camera
 Description: Description of up_pointing_camera

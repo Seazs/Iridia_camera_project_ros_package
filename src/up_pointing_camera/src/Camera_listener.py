@@ -6,6 +6,8 @@ from cv_bridge import CvBridge
 import cv2
 from ultralytics import YOLO
 from ultralytics.engine.results import Results
+from time import sleep
+
 
 
 
@@ -15,10 +17,12 @@ class CameraListener:
         #self.door_detection_pub = rospy.Publisher("door_detection", , queue_size=1)
         self.bridge = CvBridge()
         self.image = None
-        self.yolo = YOLO("/home/alexandre/catkin_ws/src/up_pointing_camera/src/yolov8n.pt")
+        self.yolo = YOLO("/home/alexandre/catkin_ws/src/up_pointing_camera/src/best.pt")
         self.classes = self.yolo.names #list of classes
 
         self.confirmation_pub = rospy.Publisher("image_proccesed_confirmation", Empty, queue_size=1)
+        sleep(1)
+        self.confirmation_pub.publish(Empty())
         
     def callback(self, data):
         cv_image = self.bridge.imgmsg_to_cv2(data, desired_encoding="bgr8")

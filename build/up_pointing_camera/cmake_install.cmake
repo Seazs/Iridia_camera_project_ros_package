@@ -1,8 +1,8 @@
-# Install script for directory: /home/alex/catkin_ws/src/up_pointing_camera
+# Install script for directory: /home/alexandre/old_catkin_ws/src/up_pointing_camera
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/alex/catkin_ws/install")
+  set(CMAKE_INSTALL_PREFIX "/home/alexandre/old_catkin_ws/install")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -38,17 +38,17 @@ if(NOT DEFINED CMAKE_CROSSCOMPILING)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/alex/catkin_ws/build/up_pointing_camera/catkin_generated/installspace/up_pointing_camera.pc")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/alexandre/old_catkin_ws/build/up_pointing_camera/catkin_generated/installspace/up_pointing_camera.pc")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/up_pointing_camera/cmake" TYPE FILE FILES
-    "/home/alex/catkin_ws/build/up_pointing_camera/catkin_generated/installspace/up_pointing_cameraConfig.cmake"
-    "/home/alex/catkin_ws/build/up_pointing_camera/catkin_generated/installspace/up_pointing_cameraConfig-version.cmake"
+    "/home/alexandre/old_catkin_ws/build/up_pointing_camera/catkin_generated/installspace/up_pointing_cameraConfig.cmake"
+    "/home/alexandre/old_catkin_ws/build/up_pointing_camera/catkin_generated/installspace/up_pointing_cameraConfig-version.cmake"
     )
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/up_pointing_camera" TYPE FILE FILES "/home/alex/catkin_ws/src/up_pointing_camera/package.xml")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/up_pointing_camera" TYPE FILE FILES "/home/alexandre/old_catkin_ws/src/up_pointing_camera/package.xml")
 endif()
 
