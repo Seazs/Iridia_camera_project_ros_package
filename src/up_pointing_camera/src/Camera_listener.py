@@ -14,7 +14,7 @@ class CameraListener:
         #self.door_detection_pub = rospy.Publisher("door_detection", , queue_size=1)
         self.bridge = CvBridge()
         self.image = None
-        self.yolo = YOLO("/home/alex/catkin_ws/src/up_pointing_camera/src/yolov8n.pt")
+        self.yolo = YOLO("/home/alexandre/Iridia_camera_project_ros_package/src/up_pointing_camera/src/yolov8n.pt")
         self.classes = self.yolo.names #list of classes
 
     def callback(self, data):

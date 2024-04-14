@@ -10,7 +10,7 @@ class CameraPublisher:
         try:
             self.image_pub = rospy.Publisher("image_raw", Image, queue_size=1) # qeueu size of 1 as we are only interested in the most recent image
             self.bridge = CvBridge()
-            self.cap = cv2.VideoCapture("/home/alex/catkin_ws/src/up_pointing_camera/src/video.mp4")
+            self.cap = cv2.VideoCapture(0)
             rospy.loginfo("Camera has been started")
             self.rate = rospy.Rate(30)
         except Exception as e:
