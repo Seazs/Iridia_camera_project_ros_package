@@ -1,2 +1,0 @@
-up_pointing_camera
--DCATKIN_DEVEL_PREFIX=/home/alexandre/old_catkin_ws/devel -DCMAKE_INSTALL_PREFIX=/home/alexandre/old_catkin_ws/install -G Unix Makefiles
