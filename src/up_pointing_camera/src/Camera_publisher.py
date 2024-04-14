@@ -12,7 +12,10 @@ class CameraPublisher:
             self.bridge = CvBridge()
             self.cap = cv2.VideoCapture(0)
             rospy.loginfo("Camera has been started")
-            self.rate = rospy.Rate(30)
+            self.rate = rospy.Rate(1)
+            
+            self.image_received = False
+            self.image_sub = rospy.Subscriber("image_proccesed_confirmation", Image, self.image_callback, queue_size=1)
         except Exception as e:
             rospy.logerr("Error: {}".format(e))
             rospy.signal_shutdown("Error: {}".format(e))
@@ -20,10 +23,16 @@ class CameraPublisher:
     def run(self):
         while not rospy.is_shutdown():
             ret, frame = self.cap.read()
-            if ret:
+            if ret and self.image_received:
                 image_message = self.bridge.cv2_to_imgmsg(frame, encoding="bgr8")
                 self.image_pub.publish(image_message)
-                self.rate.sleep()
+                rospy.loginfo("Image has been published")
+            self.rate.sleep()
+    
+    def image_callback(self, data):
+        rospy.loginfo("Image has been received")
+        self.image_received = True
+        
 
 if __name__ == '__main__':
     rospy.init_node('camera_publisher')

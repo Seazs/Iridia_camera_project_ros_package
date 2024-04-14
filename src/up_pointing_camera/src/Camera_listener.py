@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import rospy
 from sensor_msgs.msg import Image
+from std_msgs.msg import Empty
 from cv_bridge import CvBridge
 import cv2
 from ultralytics import YOLO
@@ -10,13 +11,15 @@ from ultralytics.engine.results import Results
 
 class CameraListener:
     def __init__(self):
-        self.image_sub = rospy.Subscriber("image_raw", Image, self.callback)
+        self.image_sub = rospy.Subscriber("image_raw", Image, self.callback, queue_size=1)
         #self.door_detection_pub = rospy.Publisher("door_detection", , queue_size=1)
         self.bridge = CvBridge()
         self.image = None
-        self.yolo = YOLO("/home/alexandre/Iridia_camera_project_ros_package/src/up_pointing_camera/src/yolov8n.pt")
+        self.yolo = YOLO("/home/alexandre/catkin_ws/src/up_pointing_camera/src/yolov8n.pt")
         self.classes = self.yolo.names #list of classes
 
+        self.confirmation_pub = rospy.Publisher("image_proccesed_confirmation", Empty, queue_size=1)
+        
     def callback(self, data):
         cv_image = self.bridge.imgmsg_to_cv2(data, desired_encoding="bgr8")
         #apply the model
@@ -28,8 +31,7 @@ class CameraListener:
             # data_analyzed = {"class": detected_class, "confidence": result.probs.confidence[int(obj)]}
             # self.door_detection_pub.publish(data_analyzed)
         
-        cv2.waitKey(3)
-
+        self.confirmation_pub.publish(Empty()) 
 
 if __name__ == '__main__':
     rospy.init_node('camera_listener')
