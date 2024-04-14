@@ -14,7 +14,7 @@ from time import sleep
 class CameraListener:
     def __init__(self):
         self.image_sub = rospy.Subscriber("image_raw", Image, self.callback, queue_size=1)
-        #self.door_detection_pub = rospy.Publisher("door_detection", , queue_size=1)
+        self.door_detection_pub = rospy.Publisher("door_detection", tuple, queue_size=1)
         self.bridge = CvBridge()
         self.image = None
         self.yolo = YOLO("/home/alexandre/catkin_ws/src/up_pointing_camera/src/best.pt")
@@ -32,8 +32,8 @@ class CameraListener:
             detected_class = self.classes[int (obj)]
             print(detected_class)
             rospy.loginfo(detected_class)
-            # data_analyzed = {"class": detected_class, "confidence": result.probs.confidence[int(obj)]}
-            # self.door_detection_pub.publish(data_analyzed)
+            data = (detected_class, 3)
+            self.door_detection_pub.publish(data)
         
         self.confirmation_pub.publish(Empty()) 
 
