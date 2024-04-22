@@ -1,5 +1,7 @@
 src/up_pointing_camera/src/video.mp4
 src/up_pointing_camera/
+src/my_robot_controller/
 build/
 devel/
 .vscode/
+src/.vscode/
