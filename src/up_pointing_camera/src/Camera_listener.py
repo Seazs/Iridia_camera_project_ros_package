@@ -13,10 +13,43 @@ from math import tan
 CAMERA_RATIO = 12/9 # 2592/1944 pixels -> 640/480 pixels
 HEIGHT_PX = 480
 WIDTH_PX = 640
-FOVX = 72 # degrees
-FOVY = 54 # = 72 * 9/12 degrees
-ROOM_HEIGHT = 2.5 # suppose the door is 2.5 meters high
+# FOVX = 72 # degrees (withoout fisheye)
+# FOVY = 54 # = 72 * 9/12 degrees(without fisheye)
+FOV = 130 * 3.14159265358979323846 / 180 # radians
+ROOM_HEIGHT = 2 # suppose the door is 2.5 meters high
+ALPHA = 3 # exponent of the model
 
+def get_center_of_object(obj):
+    x1, y1, x2, y2 = obj.xyxy[0]
+    return (x1 + x2) / 2, (y1 + y2) / 2
+
+def get_real_position_from_detection_linear(detection):
+    visible_ceiling_length = tan(FOV/2)*ROOM_HEIGHT
+    image_center_x, image_center_y = (WIDTH_PX/2, HEIGHT_PX/2)
+    door_center_x, door_center_y = get_center_of_object(detection)
+    #for linear model
+    x_distance = ROOM_HEIGHT*tan(FOV/2)*(door_center_x- image_center_x)/(WIDTH_PX/2)
+    y_distance = ROOM_HEIGHT*tan(FOV/2)*(door_center_y - image_center_y)/(HEIGHT_PX/2)
+    return x_distance, y_distance
+
+def get_real_position_from_detection_cubic(detection):
+    visible_ceiling_length = tan(FOV/2)*ROOM_HEIGHT
+    image_center_x, image_center_y = (WIDTH_PX/2, HEIGHT_PX/2)
+    door_center_x, door_center_y = get_center_of_object(detection)
+    #for cubic model
+    dx = (door_center_x - image_center_x)
+    dy = (door_center_y - image_center_y)
+
+    if dx > 0:   
+        x_distance = ROOM_HEIGHT*tan(FOV/2)*(dx/(WIDTH_PX/2))**(ALPHA)
+    else:
+        x_distance = -ROOM_HEIGHT*tan(FOV/2)*((-dx)/(WIDTH_PX/2))**(ALPHA)
+
+    if dy > 0:
+        y_distance = ROOM_HEIGHT*tan(FOV/2)*(dy/(HEIGHT_PX/2))**(ALPHA)
+    else:
+        y_distance = -ROOM_HEIGHT*tan(FOV/2)*((-dy)/(HEIGHT_PX/2))**(ALPHA)    
+    return x_distance, y_distance
 
 
 
@@ -47,20 +80,14 @@ class CameraListener:
                 #publish the detection
 
                 # get the coordinates of the bounding box
-                # get the center of the door
                 x1, y1, x2, y2 = obj.xyxy[0]
-                center_x = (x1 + x2) / 2
-                center_y = (y1 + y2) / 2
+                # get the center of the door
+                center_x, center_y = get_center_of_object(obj)
 
-                robot_pos = (HEIGHT_PX/2, WIDTH_PX/2)
-                x_distance = ROOM_HEIGHT*tan(FOVX/2)*(center_x - robot_pos[0])/(WIDTH_PX/2)
-                y_distance = ROOM_HEIGHT*tan(FOVY/2)*(center_y - robot_pos[1])/(HEIGHT_PX/2)
-
-
-
+                # get the real position of the door
+                x_distance, y_distance = get_real_position_from_detection_cubic(obj)
                 
 
-                rospy.loginfo("x1: {}, y1: {}, x2: {}, y2: {}".format(x1, y1, x2, y2))
                 rospy.loginfo("center_x: {}, center_y: {}".format(center_x, center_y))
                 rospy.loginfo("x_distance: {}, y_distance: {}".format(x_distance, y_distance))
                 # #draw a green circle around at the center of the door
@@ -85,8 +112,6 @@ if __name__ == '__main__':
 
             
 
-def get_real_position_from_detection(detection):
-    pass
             
             
 

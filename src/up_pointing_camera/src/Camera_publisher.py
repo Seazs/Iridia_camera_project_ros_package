@@ -11,7 +11,7 @@ class CameraPublisher:
         try:
             self.image_pub = rospy.Publisher("image_raw", Image, queue_size=10) # qeueu size of 1 as we are only interested in the most recent image
             self.bridge = CvBridge()
-            self.cap = cv2.VideoCapture("http://192.168.0.182:8002/video_feed")
+            self.cap = cv2.VideoCapture("http://192.168.0.182:8003/video_feed")
             
 
 
