@@ -17,7 +17,7 @@ WIDTH_PX = 640
 # FOVY = 54 # = 72 * 9/12 degrees(without fisheye)
 FOV = 130 * 3.14159265358979323846 / 180 # radians
 ROOM_HEIGHT = 2 # suppose the door is 2.5 meters high
-ALPHA = 3 # exponent of the model
+ALPHA = 2.5 # exponent of the model
 
 def get_center_of_object(obj):
     x1, y1, x2, y2 = obj.xyxy[0]
@@ -76,7 +76,7 @@ class CameraListener:
             detected_class = self.classes[int (obj.cls)]
             print(detected_class)
             rospy.loginfo(detected_class)
-            if detected_class == "door":
+            if detected_class == "doors":
                 #publish the detection
 
                 # get the coordinates of the bounding box
