@@ -16,21 +16,13 @@ WIDTH_PX = 640
 # FOVX = 72 # degrees (withoout fisheye)
 # FOVY = 54 # = 72 * 9/12 degrees(without fisheye)
 FOV = 130 * 3.14159265358979323846 / 180 # radians
-ROOM_HEIGHT = 2 # suppose the door is 2.5 meters high
+ROOM_HEIGHT = 2 # suppose the door is 2 meters high
 ALPHA = 2 # exponent of the model
 
 def get_center_of_object(obj):
     x1, y1, x2, y2 = obj.xyxy[0]
     return (x1 + x2) / 2, (y1 + y2) / 2
 
-def get_real_position_from_detection_linear(detection):
-    visible_ceiling_length = tan(FOV/2)*ROOM_HEIGHT
-    image_center_x, image_center_y = (WIDTH_PX/2, HEIGHT_PX/2)
-    door_center_x, door_center_y = get_center_of_object(detection)
-    #for linear model
-    x_distance = ROOM_HEIGHT*tan(FOV/2)*(door_center_x- image_center_x)/(WIDTH_PX/2)
-    y_distance = ROOM_HEIGHT*tan(FOV/2)*(door_center_y - image_center_y)/(HEIGHT_PX/2)
-    return x_distance, y_distance
 
 def get_real_position_from_detection_cubic(detection):
     visible_ceiling_length = tan(FOV/2)*ROOM_HEIGHT
