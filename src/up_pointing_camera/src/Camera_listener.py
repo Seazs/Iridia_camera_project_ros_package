@@ -17,7 +17,7 @@ WIDTH_PX = 640
 # FOVY = 54 # = 72 * 9/12 degrees(without fisheye)
 FOV = 130 * 3.14159265358979323846 / 180 # radians
 ROOM_HEIGHT = 2 # suppose the door is 2.5 meters high
-ALPHA = 2.5 # exponent of the model
+ALPHA = 2 # exponent of the model
 
 def get_center_of_object(obj):
     x1, y1, x2, y2 = obj.xyxy[0]
@@ -46,9 +46,9 @@ def get_real_position_from_detection_cubic(detection):
         x_distance = -ROOM_HEIGHT*tan(FOV/2)*((-dx)/(WIDTH_PX/2))**(ALPHA)
 
     if dy > 0:
-        y_distance = ROOM_HEIGHT*tan(FOV/2)*(dy/(HEIGHT_PX/2))**(ALPHA)
+        y_distance = ROOM_HEIGHT*tan(FOV/2)*(dy/(WIDTH_PX/2))**(ALPHA)
     else:
-        y_distance = -ROOM_HEIGHT*tan(FOV/2)*((-dy)/(HEIGHT_PX/2))**(ALPHA)    
+        y_distance = -ROOM_HEIGHT*tan(FOV/2)*((-dy)/(WIDTH_PX/2))**(ALPHA)    
     return x_distance, y_distance
 
 
@@ -102,6 +102,8 @@ class CameraListener:
             
         
         self.confirmation_pub.publish(Empty()) 
+
+        
 
 if __name__ == '__main__':
     rospy.loginfo("starting camera listener node")
