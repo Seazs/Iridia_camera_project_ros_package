@@ -16,7 +16,7 @@ WIDTH_PX = 640
 # FOVX = 72 # degrees (withoout fisheye)
 # FOVY = 54 # = 72 * 9/12 degrees(without fisheye)
 FOV = 130 * 3.14159265358979323846 / 180 # radians
-ROOM_HEIGHT = 2 # suppose the door is 2.5 meters high
+ROOM_HEIGHT = 2 # suppose the door is 2 meters high
 ALPHA = 2.5 # exponent of the model
 
 def get_center_of_object(obj):
