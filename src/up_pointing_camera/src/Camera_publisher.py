@@ -9,11 +9,14 @@ import cv2
 class CameraPublisher:
     def __init__(self):
         try:
-            self.image_pub = rospy.Publisher("image_raw", Image, queue_size=1) # qeueu size of 1 as we are only interested in the most recent image
+            self.image_pub = rospy.Publisher("image_raw", Image, queue_size=10) # qeueu size of 1 as we are only interested in the most recent image
             self.bridge = CvBridge()
-            self.cap = cv2.VideoCapture(0)
+            
+            self.cap = cv2.VideoCapture("http://192.168.0.182:8010/video_feed")
+            
+
             rospy.loginfo("Camera has been started")
-            self.rate = rospy.Rate(30)
+            self.rate = rospy.Rate(60)
             
             self.image_received = True
             self.image_sub = rospy.Subscriber("image_proccesed_confirmation", Empty, self.image_callback, queue_size=1)
@@ -25,6 +28,7 @@ class CameraPublisher:
         while not rospy.is_shutdown():
             ret, frame = self.cap.read()
             if ret and self.image_received:
+                #rotate the image
                 image_message = self.bridge.cv2_to_imgmsg(frame, encoding="bgr8")
                 self.image_pub.publish(image_message)
                 rospy.loginfo("Image has been published")
