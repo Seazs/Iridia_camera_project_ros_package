@@ -14,7 +14,6 @@ class CameraPublisher:
             
             self.cap = cv2.VideoCapture(0)
             
-
             rospy.loginfo("Camera has been started")
             self.rate = rospy.Rate(60)
             
@@ -28,7 +27,6 @@ class CameraPublisher:
         while not rospy.is_shutdown():
             ret, frame = self.cap.read()
             if ret and self.image_received:
-                #rotate the image
                 image_message = self.bridge.cv2_to_imgmsg(frame, encoding="bgr8")
                 self.image_pub.publish(image_message)
                 rospy.loginfo("Image has been published")
