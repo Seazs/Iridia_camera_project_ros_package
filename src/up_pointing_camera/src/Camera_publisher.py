@@ -12,8 +12,9 @@ class CameraPublisher:
             self.image_pub = rospy.Publisher("image_raw", Image, queue_size=10) # qeueu size of 1 as we are only interested in the most recent image
             self.bridge = CvBridge()
             
-            self.cap = cv2.VideoCapture(0)
+            self.cap = cv2.VideoCapture("http://10.66.45.138:5000/video_feed")
             
+
             rospy.loginfo("Camera has been started")
             self.rate = rospy.Rate(60)
             
@@ -41,8 +42,6 @@ class CameraPublisher:
 if __name__ == '__main__':
     rospy.init_node('camera_publisher')
     rospy.loginfo("Camera Publisher Node has been started")
-    #print working directory
-    rospy.loginfo("Current working directory: {}".format(os.getcwd()))
     camera_publisher = CameraPublisher()
     camera_publisher.run()
     rospy.spin()
