@@ -19,6 +19,12 @@ FOV = 130 * 3.14159265358979323846 / 180  # Field of View in radians
 ROOM_HEIGHT = 2  # Assumed height of the room in meters
 ALPHA = 2  # Exponent used in distance calculation
 SHOW_IMAGE = True # show detection on image (can not be turned on on the robot)
+WEIGHT = "door_weight.pt"
+
+
+rospack = rospkg.RosPack()
+package_path = rospack.get_path("up_pointing_camera")
+weight_path = os.path.join(package_path, "src", WEIGHT)
 
 def get_center_of_object(obj):
     """
@@ -58,7 +64,7 @@ class CameraListener:
     """
     def __init__(self):
         self.bridge = CvBridge()
-        self.yolo = YOLO("/home/alex/catkin_ws/src/up_pointing_camera/src/best.pt")
+        self.yolo = YOLO(weight_path)
         self.classes = self.yolo.names  # List of classes detected by the model
 
         # ROS Subscribers and Publishers
