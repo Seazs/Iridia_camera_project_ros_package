@@ -9,6 +9,7 @@ from ultralytics import YOLO
 from ultralytics.engine.results import Results
 from time import sleep
 from math import tan
+import cv2
 
 # Constants for camera and detection settings
 CAMERA_RATIO = 12 / 9  # Aspect ratio: 2592/1944 pixels -> 640/480 pixels
@@ -17,7 +18,7 @@ WIDTH_PX = 640
 FOV = 130 * 3.14159265358979323846 / 180  # Field of View in radians
 ROOM_HEIGHT = 2  # Assumed height of the room in meters
 ALPHA = 2  # Exponent used in distance calculation
-SHOW_IMAGE = False # show detection on image (can not be turned on on the robot)
+SHOW_IMAGE = True # show detection on image (can not be turned on on the robot)
 
 def get_center_of_object(obj):
     """

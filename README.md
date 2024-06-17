@@ -1,8 +1,8 @@
 # Iridia_camera_project_ros_package
 ros package for door detection on rvr robot
 
-## Cloning the repo
-To clone the repo do the following commande:
+## Installing the 
+First clone the repo with the following commande:
 ```
-git clone
+git clone https://github.com/Seazs/Iridia_camera_project_ros_package.git
 ```
