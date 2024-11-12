@@ -18,7 +18,7 @@ WIDTH_PX = 640
 FOV = 130 * 3.14159265358979323846 / 180  # Field of View in radians
 ROOM_HEIGHT = 2  # Assumed height of the room in meters
 ALPHA = 2  # Exponent used in distance calculation
-SHOW_IMAGE = True # show detection on image (can not be turned on on the robot)
+SHOW_IMAGE = False # show detection on image (can not be turned on on the robot)
 WEIGHT = "door_weight.pt"
 
 
